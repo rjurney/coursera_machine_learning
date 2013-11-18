@@ -5,28 +5,6 @@ import numpy as np
 import pylab as pl
 import statsmodels.api as sm
 
-df = pd.read_csv("binary.csv")
-df.describe()
-df.head()
-df.columns = ["admit", "gre", "gpa", "prestige"]
-df.head()
-pd.crosstab(df['admit'], df['prestige'], rownames=['admit'])
-df.hist()
-dummy_ranks = pd.get_dummies(df['prestige'], prefix='prestige')
-
-cols_to_keep = ['admit', 'gre', 'gpa']
-data = df[cols_to_keep].join(dummy_ranks.ix[:, 'prestige_2':])
-data
-data.head()
-data['intercept'] = 1.0
-data
-train_cols = data.columns[1:]
-logit = sm.Logit(data['admit'], data[train_cols])
-result = logit.fit()
-result.summary()
-np.exp(result.params)
-result.predict([700, 4.0, 1, 0, 0, 1.0])
-
 # Build X, Y from 1st file
 f = open('ex2data1.txt')
 lines = f.readlines()
